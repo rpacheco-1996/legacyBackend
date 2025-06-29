@@ -3,9 +3,12 @@ from flask_cors import CORS
 import pandas as pd
 import psycopg2
 import random
+import joblib
 
 app = Flask(__name__)
 CORS(app)
+
+legacy_model = joblib.load("model.joblib")
 
 def query(query):
     DB_NAME = "legacy_pacheco"
@@ -67,6 +70,20 @@ def get_doctors():
         return jsonify(doctors)
     else:
         return jsonify(["No doctors found"])
+    
+@app.route('/predict')
+def predict():
+    data = request.json
+    print(data)
+    # Extract features from data here, e.g.:
+    features = [
+        data["age"],
+        data["city"],
+        data["last_name"],
+        # make sure order matches training
+    ]
+    return "OK"
+
 
 
 if __name__ == '__main__':
