@@ -8,8 +8,12 @@ import joblib
 app = Flask(__name__)
 CORS(app)
 
+# Load the model on deploy
+# No need to load this every request
 legacy_model = joblib.load("models/legacy.joblib")
 
+# Run queries in postgres
+# Takes a query string as input and returns the result rows
 def query(query):
     DB_NAME = "legacy_pacheco"
     DB_USER = "rpacheco"
@@ -28,7 +32,6 @@ def query(query):
     cursor = conn.cursor()
 
     cursor.execute(query, (True,))
-    # Fetch all rows from the executed query
     rows = cursor.fetchall()
     conn.commit()
     cursor.close()
@@ -37,10 +40,17 @@ def query(query):
     return rows
 
 
+# Hello World
 @app.route('/')
 def home():
     return "Hello from Flask on Render!"
 
+'''
+This is the database query endpoint it will search the database based on the keyword
+the user is wanting to search for. It then selects a random response from a doctor
+that was addressing a patient with a keyword related problem. It is a random
+response to add variety to the POC.
+'''
 @app.route('/legacy')
 def legacy():
     user_input = request.args.get('input', '')
@@ -51,6 +61,7 @@ def legacy():
     else:
         return "No related response found"
 
+# Get list of possible clinics for drop down
 @app.route('/getClinics')
 def get_clinics():
     query_string = "select distinct clinic from records order by clinic"
@@ -61,6 +72,7 @@ def get_clinics():
     else:
         return jsonify(["No clinics found"])
     
+# Get list of possible doctors for drop down
 @app.route('/getDoctors')
 def get_doctors():
     query_string = "select distinct doctor from records order by doctor"
@@ -71,6 +83,13 @@ def get_doctors():
     else:
         return jsonify(["No doctors found"])
     
+'''
+This is where the model prediciton happens, it takes the age of the patient, the clinic, and the doctor
+to return either True of False in regards to whether or not the doctors responses are extensive (> 100 words).
+This is a simple binary classification model for the POC. I chose a random forrest because of the mix of categorical
+and numerical data, as well as having seen random forests at previous companies I though it was a good option as I
+wanted to do something a bit more in depth than a linear regression model.
+'''
 @app.route('/predict', methods=["POST"])
 def predict():
     data = request.json
