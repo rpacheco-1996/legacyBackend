@@ -59,7 +59,7 @@ def get_clinics():
         return jsonify(["No clinics found"])
     
 @app.route('/getDoctors')
-def get_clinics():
+def get_doctors():
     query_string = "select distinct doctor from records order by doctor"
     rows = query(query_string)
     if len(rows) > 0:
