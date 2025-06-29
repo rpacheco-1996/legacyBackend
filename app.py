@@ -79,8 +79,8 @@ def predict():
     # Extract features from data here, e.g.:
     features = [
         data["age"],
-        data["city"],
-        data["last_name"],
+        data["clinic"],
+        data["doctor"],
         # make sure order matches training
     ]
     legacy_model = joblib.load("legacy.joblib")
