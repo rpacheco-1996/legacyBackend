@@ -8,8 +8,6 @@ import joblib
 app = Flask(__name__)
 CORS(app)
 
-legacy_model = joblib.load("models/legacy.joblib")
-
 def query(query):
     DB_NAME = "legacy_pacheco"
     DB_USER = "rpacheco"
@@ -82,6 +80,8 @@ def predict():
         data["last_name"],
         # make sure order matches training
     ]
+    legacy_model = joblib.load("legacy.joblib")
+    print(legacy_model)
     return "OK"
 
 
