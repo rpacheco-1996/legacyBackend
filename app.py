@@ -76,14 +76,12 @@ def predict():
     data = request.json
     print("DATA!!!!!")
     print(data)
-    # Extract features from data here, e.g.:
-    features = [
-        data["age"],
-        data["clinic"],
-        data["doctor"],
-        # make sure order matches training
-    ]
-    legacy_model = joblib.load("legacy.joblib")
+    model_input = pd.DataFrame([
+            [data['age'], data['clinic'], data['doctor']],
+        ], columns=["age", "clinic", "doctor"])
+    
+    print(model_input)
+    legacy_model = joblib.load("models/legacy.joblib")
     print(legacy_model)
     return "OK"
 
