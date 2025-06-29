@@ -8,6 +8,8 @@ import joblib
 app = Flask(__name__)
 CORS(app)
 
+legacy_model = joblib.load("models/legacy.joblib")
+
 def query(query):
     DB_NAME = "legacy_pacheco"
     DB_USER = "rpacheco"
@@ -71,19 +73,16 @@ def get_doctors():
     
 @app.route('/predict', methods=["POST"])
 def predict():
-    print("DATA TIME!!!!!!")
-    print(request)
     data = request.json
-    print("DATA!!!!!")
-    print(data)
     model_input = pd.DataFrame([
             [data['age'], data['clinic'], data['doctor']],
         ], columns=["age", "clinic", "doctor"])
     
-    print(model_input)
-    legacy_model = joblib.load("models/legacy.joblib")
-    print(legacy_model)
-    return "OK"
+    result = legacy_model.predict(model_input)[0]
+    if result == 0:
+        return "True"
+    else:
+        return "False"
 
 
 
