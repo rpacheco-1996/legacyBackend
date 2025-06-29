@@ -8,7 +8,7 @@ import joblib
 app = Flask(__name__)
 CORS(app)
 
-legacy_model = joblib.load("model.joblib")
+legacy_model = joblib.load("models/legacy.joblib")
 
 def query(query):
     DB_NAME = "legacy_pacheco"
