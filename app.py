@@ -69,7 +69,7 @@ def get_doctors():
     else:
         return jsonify(["No doctors found"])
     
-@app.route('/predict')
+@app.route('/predict', methods=["POST"])
 def predict():
     print("DATA TIME!!!!!!")
     print(request)
@@ -83,8 +83,8 @@ def predict():
         data["last_name"],
         # make sure order matches training
     ]
-    #legacy_model = joblib.load("legacy.joblib")
-    #print(legacy_model)
+    legacy_model = joblib.load("legacy.joblib")
+    print(legacy_model)
     return "OK"
 
 
