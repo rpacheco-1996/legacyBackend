@@ -71,6 +71,8 @@ def get_doctors():
     
 @app.route('/predict')
 def predict():
+    print("DATA TIME!!!!!!")
+    print(request)
     data = request.json
     print("DATA!!!!!")
     print(data)
@@ -81,8 +83,8 @@ def predict():
         data["last_name"],
         # make sure order matches training
     ]
-    legacy_model = joblib.load("legacy.joblib")
-    print(legacy_model)
+    #legacy_model = joblib.load("legacy.joblib")
+    #print(legacy_model)
     return "OK"
 
 
