@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 import pandas as pd
 import psycopg2
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -33,7 +34,7 @@ def query(keyword):
     conn.close()
 
     if len(rows) > 0:
-        return rows[0][0]
+        return rows[int(random.randint(0, len(rows)))][0]
     else:
         return "No related response found"
 
