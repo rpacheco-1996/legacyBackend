@@ -4,4 +4,4 @@ pandas
 psycopg2
 flask-cors
 joblib
-scikit-learn
+scikit-learn==1.6.1
