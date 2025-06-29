@@ -72,6 +72,7 @@ def get_doctors():
 @app.route('/predict')
 def predict():
     data = request.json
+    print("DATA!!!!!")
     print(data)
     # Extract features from data here, e.g.:
     features = [
