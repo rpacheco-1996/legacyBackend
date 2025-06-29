@@ -3,3 +3,4 @@ gunicorn
 pandas
 psycopg2
 flask-cors
+joblib
