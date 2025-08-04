@@ -15,10 +15,10 @@ legacy_model = joblib.load("models/legacy.joblib")
 # Run queries in postgres
 # Takes a query string as input and returns the result rows
 def query(query):
-    DB_NAME = "legacy_pacheco"
+    DB_NAME = "legacy_pacheco_ct43"
     DB_USER = "rpacheco"
-    DB_PASSWORD = "D1qoGvjXqPTd2vB4i4KS71xDEWmCOpSq"
-    DB_HOST = "dpg-d1ff63mmcj7s739p963g-a.oregon-postgres.render.com"
+    DB_PASSWORD = "mjuP2Z6QnhOypYR7EnjU6wd03gC3wM8W"
+    DB_HOST = "dpg-d28i801r0fns73b5o6kg-a.oregon-postgres.render.com"
     DB_PORT = "5432"
 
     conn = psycopg2.connect(
